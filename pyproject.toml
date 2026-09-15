@@ -1,0 +1,44 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-microframeworks"
+version = "2026.0.0"
+description = "A collection of functional programming inspired microframeworks for solving problems"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+authors = [
+  {name = "James Westfall", email = "james.westfall@neat.no"}
+]
+
+dependencies = [
+    "grappa==1.0.1",
+    "pytest==8.3.5",
+    "timeout-timer==0.2.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "python_microframeworks"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests", "*.tests", "*.tests.*", "tests.*"]
+
+[tool.pylint.messages_control]
+# Disable specific rules or categories entirely
+disable = [
+    "raw-checker-failed",
+    "bad-inline-option",
+    "locally-disabled",
+    "file-ignored",
+    "suppressed-message",
+    "useless-suppression",
+    "deprecated-pragma",
+    "use-symbolic-message-instead",
+    "missing-function-docstring"
+    "missing-module-docstring", # Disables the requirement for a docstring at the top of every file
+]
