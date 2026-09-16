@@ -29,13 +29,17 @@ def test_bingo_must_find_an_appropriate_activity():
         state["activities"].remove(activity)
     def add_activity(activity):
         state["activities"].append(activity)
-    board = Bingo(state, lambda: sleep(0.01), max_iterations=10)
-    board.add_cell(get_month, get_temp, get_wind, get_snow)
+
+    board = Bingo(state, lambda: sleep(0.01), max_iterations=3)
+
+    board.add_cell(get_month, get_temp, get_wind, get_snow, use_up=False)
     board.add_cell("temp < 5 or wind > 6", callback=lambda: drop_activity("flyfishing"))
     board.add_cell("temp < 10 or wind < 6", callback=lambda: drop_activity("sailing"))
     board.add_cell("snowdepth < 40", callback=lambda: drop_activity("skiing"))
     board.add_cell("temp > 5 or snowdepth > 10", callback=lambda: drop_activity("iceskating"))
     board.add_cell("len(activities) == 1", callback=board.stop)
-    board.add_cell("len(activities) == 0", callback=lambda: add_activity("cards"))
+    board.add_cell("remaining_iterations == 1", "len(activities) == 0", callback=lambda: add_activity("cards"))
+
     board.wait()
+
     len(state["activities"]) | should.be.equal.to(1)

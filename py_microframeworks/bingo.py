@@ -96,5 +96,6 @@ class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional
                         self.log_delegate("Failed to evaluate expressions: "
                                           f"{cell['expressions']}. Got exception\n{ex}")
             self.current_iteration += 1
+            self.state["remaining_iterations"] = self.max_iterations - self.current_iteration
             self.pulse_function()
         self.running = False

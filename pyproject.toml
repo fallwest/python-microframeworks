@@ -28,6 +28,9 @@ package-dir = {"" = "py_microframeworks"}
 where = ["src"]
 exclude = ["tests", "*.tests", "*.tests.*", "tests.*"]
 
+[tool.pylint.format]
+max-line-length = 120
+
 [tool.pylint.messages_control]
 # Disable specific rules or categories entirely
 disable = [
