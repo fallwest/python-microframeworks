@@ -1,11 +1,11 @@
 # python-microframeworks
-A collection of functional programming inspired microframeworks for solving problems
+A collection of functional programming inspired microframeworks for solving problems.
 
 # Examples
 
 ## The Bingo framework
 
-The Bingo framework allows you to set up a board with cells that get used up when all the function(s) or expression(s) they contain evaluate to `True` (using up overridable via the cell's `use_up` flag). This functional programming inspired micro-framwork is useful for complex and even non-linear sequences that need to continue until one or several criteria are fullfilled. The framework runs through all the cells the number of times specified by the `max_iterations` property (default 5).
+The Bingo framework allows you to set up a board with cells that get used up when all the function(s) or expression(s) they contain evaluate to `True` (the using up behavior is overridable via the cell's `use_up` flag). This functional programming inspired micro-framwork is useful for complex and even non-linear sequences that need to continue until one or several criteria are fullfilled. The framework runs through all the cells the number of times specified by the `max_iterations` property (default 5).
 
 See [tests/test_integration_bingo.py](tests/test_integration_bingo.py):
 
@@ -53,7 +53,7 @@ def test_bingo_must_find_an_appropriate_activity():
 
 The henrulle framework allows you to run through a sequence of functions the number of times specified by the `attempts` parameter (default 2). The framework encourages functional programming conventions: exceptions are suppressed so they do not affect the flow, and the functions in sequence should be pure and should not change local state or act upon state changed by another function. An exception to this rule is that a function can always stop the whole sequence by returning `True`.
 
-This framework shines for solving complex workflows when you setup a henrulle sequence of henrulle sequences. In that case you can check in the first function of each subsequence if the sequence is relevant and abort that sequence and hop to the next sequence in the list if it is not.
+This framework shines for solving complex workflows when you setup a henrulle sequence of henrulle sequences. In that case you can check in the first function of each subsequence if that sequence is relevant and abort that sequence and hop to the next sequence in the list if it is not.
 
 See [tests/test_task_util.py](tests/test_task_util.py):
 
