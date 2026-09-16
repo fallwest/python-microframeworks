@@ -14,13 +14,13 @@ def test_bingo_must_find_an_appropriate_activity():
         state["month"] = randint(1, 12)
         return True
     def warm_period():
-        return state["month"] in [5, 6, 7, 8, 9]
+        return state["month"] in [4, 5, 6, 7, 8, 9, 10]
     def get_temp():
-        temp_range = (6, 35) if warm_period() else (-35, 5)
+        temp_range = (6, 30) if warm_period() else (-35, 5)
         state["temp"] = randint(*temp_range)
         return True
     def get_wind():
-        state["wind"] = randint(0, 40)
+        state["wind"] = randint(0, 25)
         return True
     def get_snow():
         state["snowdepth"] = 0 if warm_period() else randint(0, 120)
@@ -32,11 +32,12 @@ def test_bingo_must_find_an_appropriate_activity():
 
     board = Bingo(state, lambda: sleep(0.01), max_iterations=3)
 
-    board.add_cell(get_month, get_temp, get_wind, get_snow, use_up=False)
-    board.add_cell("temp < 5 or wind > 6", callback=lambda: drop_activity("flyfishing"))
+    board.add_cell(get_month, get_temp, get_wind, get_snow)
     board.add_cell("temp < 10 or wind < 6", callback=lambda: drop_activity("sailing"))
     board.add_cell("snowdepth < 40", callback=lambda: drop_activity("skiing"))
     board.add_cell("temp > 5 or snowdepth > 10", callback=lambda: drop_activity("iceskating"))
+    board.add_cell("any([wind > 6, temp < 5, snowdepth > 1])",
+                   callback=lambda: drop_activity("flyfishing"))
     board.add_cell("len(activities) == 1", callback=board.stop)
     board.add_cell("remaining_iterations == 1", "len(activities) == 0",
                    callback=lambda: add_activity("cards"))
