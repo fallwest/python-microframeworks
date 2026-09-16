@@ -193,7 +193,7 @@ def test_bingo_must_call_cell_repeatedly_when_use_up_false():
     sleep(0.01)
     state["a"] += 1
     sleep(0.01)
-    board.stop()
+    board.wait()
     callback.call_count | should.be.higher.than(1)
 
 

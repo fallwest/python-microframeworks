@@ -80,7 +80,11 @@ class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional
         cell["executed"] = True
 
     def _monitor(self):
-        while self.current_iteration < self.max_iterations and any(self._remaining_cells()):
+        while (
+            self.running
+            and self.current_iteration < self.max_iterations
+            and any(self._remaining_cells())
+        ):
             for index, cell in enumerate(self.cells):
                 if not cell["triggered"]:
                     if self.consecutive and self._has_uncalled_priors(index):
