@@ -5,7 +5,7 @@ A collection of functional programming inspired microframeworks for solving prob
 
 ## The Bingo framework
 
-The Bingo framework allows you to set up a board with cells that get used up when all the function(s) or expression(s) they contain evaluate to `True` . This functional programming inspired micro-framwork is useful for complex and even non-linear sequences that need to continue until one or several criteria are fullfilled. The framework runs through all the cells the number of times specified by the `max_iterations` property (default 5).
+The Bingo framework allows you to set up a board with cells that get used up when all the function(s) or expression(s) they contain evaluate to `True`. You can specify a callback function to fire when the cell completes. This functional programming inspired micro-framwork is useful for complex and even non-linear sequences that need to continue until one or several criteria are fullfilled. The framework runs through all the cells the number of times specified by the `max_iterations` property (default 5), stopping earlier if all cells are complete.
 
 See [tests/test_integration_bingo.py](tests/test_integration_bingo.py):
 
