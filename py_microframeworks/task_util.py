@@ -9,7 +9,7 @@ def henrulle(context, tasks: List[Callable], attempts: int = 2,
     """Execute a list of tasks until one of them returns True, or all attempts are exhausted.
 
     Args:
-        context (NeatContext): A context object with a boolean completed flag that indicates whether
+        context: A context object with a boolean completed flag that indicates whether
         the job is complete. Set the completed flag to True to terminate the job.
         tasks (List[Callable]): A list of callables that return a boolean indicating whether the task is complete.
         attempts (int, optional): The number of times to attempt the task sequence before giving up. Defaults to 2.
