@@ -27,7 +27,7 @@ jobs:
 
             - name: Run tests and generate coverage report
               run: |
-                    python -m pytest tests/ -cov=./ --cov-report=term-missing:skip-covered \
+                    python -m pytest tests/ -cov=./py_microframeworks/ --cov-report=term-missing:skip-covered \
                     --junitxml=pytest.xml | tee pytest-coverage.txt
 
             - name: Post Pytest Coverage Comment
