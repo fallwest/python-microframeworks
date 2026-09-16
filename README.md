@@ -41,7 +41,8 @@ def test_bingo_must_find_an_appropriate_activity():
     board.add_cell("snowdepth < 40", callback=lambda: drop_activity("skiing"))
     board.add_cell("temp > 5 or snowdepth > 10", callback=lambda: drop_activity("iceskating"))
     board.add_cell("len(activities) == 1", callback=board.stop)
-    board.add_cell("remaining_iterations == 1", "len(activities) == 0", callback=lambda: add_activity("cards"))
+    board.add_cell("remaining_iterations == 1", "len(activities) == 0",
+                   callback=lambda: add_activity("cards"))
 
     board.wait()
 
