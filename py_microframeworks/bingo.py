@@ -4,7 +4,7 @@ from typing import Callable, Dict, List
 
 
 class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional-arguments
-    """Add cells. When conditions for cells match, they fire. By default they get used up.
+    """Add cells. When conditions for cells match, they fire. By default cells get used up.
     """
     def __init__(self, state: Dict, pulse_function: Callable, max_iterations: int = 5,
                  log_delegate=print, consecutive: bool = False):  # pylint: disable=too-many-arguments
