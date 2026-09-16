@@ -2,7 +2,7 @@
 A collection of functional programming inspired microframeworks for solving problems
 
 # Examples
-A good example goes a long way. From `tests/test_integration_bingo.py`:
+A good example goes a long way. From [tests/test_integration_bingo.py](tests/test_integration_bingo.py):
 
 ## Bingo framework
 

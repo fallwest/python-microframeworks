@@ -2,6 +2,9 @@ name: Run Pytest
 
 on: [push]
 
+permissions:
+  pull-requests: write
+
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -22,12 +25,13 @@ jobs:
                   pip install pytest pytest-cov
                   pip install .
 
-            - name: Run tests with pytest
+            - name: Run tests and generate coverage report
               run: |
-                    python -m pytest tests/ --cov=./ --cov-report=term-missing:skip-covered \
+                    python -m pytest tests/ -cov=./ --cov-report=term-missing:skip-covered \
                     --junitxml=pytest.xml | tee pytest-coverage.txt
-            - name: Pytest coverage comment
+
+            - name: Post Pytest Coverage Comment
               uses: MishaKav/pytest-coverage-comment@v1
               with:
-                  pytest-coverage-path: ./pytest-coverage.txt
-                  junitxml-path: ./pytest.xml
+                pytest-coverage-path: ./pytest-coverage.txt
+                junitxml-path: ./pytest.xml
