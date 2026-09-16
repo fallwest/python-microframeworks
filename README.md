@@ -1,5 +1,5 @@
 # python-microframeworks
-A collection of functional programming inspired microframeworks for solving complex, even non-linear, problems.
+A collection of functional programming inspired microframeworks for solving complex (even non-linear) problems.
 
 # Examples
 
