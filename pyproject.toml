@@ -40,5 +40,10 @@ disable = [
     "deprecated-pragma",
     "use-symbolic-message-instead",
     "missing-function-docstring",
-    "missing-module-docstring", # Disables the requirement for a docstring at the top of every file
+    "missing-module-docstring",
+]
+
+[tool.coverage.run]
+omit = [
+    "tests/*",
 ]
