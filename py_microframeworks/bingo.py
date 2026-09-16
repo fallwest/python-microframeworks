@@ -4,8 +4,10 @@ from typing import Callable, Dict, List
 
 
 class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional-arguments
-    def __init__(self, state: Dict, pulse_function: Callable, max_iterations: int = 5, log_delegate=print,
-                 consecutive: bool = False):
+    """Add cells. When conditions for cells match, they fire. By default they get used up.
+    """
+    def __init__(self, state: Dict, pulse_function: Callable, max_iterations: int = 5,
+                 log_delegate=print, consecutive: bool = False):  # pylint: disable=too-many-arguments
         self.state = state
         self.cells: List[Dict] = []
         self.pulse_function = pulse_function
@@ -19,7 +21,8 @@ class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional
         self.complete = False
 
     def add_cell(self, *expressions, callback=None, callback_msg=None, use_up=True):
-        assert not (self.consecutive and not use_up), "The use_up property must always be True when running in consecutive mode"
+        assert not (self.consecutive and not use_up), \
+            "The use_up property must always be True when running in consecutive mode"
         self.cells.append({
             "expressions": expressions,
             "callback": callback,
@@ -42,13 +45,15 @@ class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional
 
     def wait(self, poll: float = 1):
         self.run()
-        while self.running and self.current_iteration < self.max_iterations and any(self._remaining_cells()):
+        while self.running and self.current_iteration < self.max_iterations \
+            and any(self._remaining_cells()):
             time.sleep(poll)
         if self.thread:
             self.thread.join()
         remaining_cells = [cell for cell in self.cells if not cell["executed"]]
-        self.log_delegate((f"Bingo finished in {time.monotonic() - self.start_time}s. Total iterations: {self.current_iteration}. "
-                          f"Number of unexecuted cells: {len(remaining_cells)}"))
+        self.log_delegate((f"Bingo finished in {time.monotonic() - self.start_time}s. "
+                           f"Total iterations: {self.current_iteration}. "
+                           f"Number of unexecuted cells: {len(remaining_cells)}"))
         self.complete = len(remaining_cells) == 0
 
     def _remaining_cells(self):
@@ -84,7 +89,8 @@ class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional
                         if all(self._execute_expr(expr) for expr in cell["expressions"]):
                             self._fire_cell(cell)
                     except Exception as ex:  # pylint: disable=W0718
-                        self.log_delegate(f"Failed to evaluate expressions: {cell['expressions']}. Got exception\n{ex}")
+                        self.log_delegate("Failed to evaluate expressions: "
+                                          f"{cell['expressions']}. Got exception\n{ex}")
             self.current_iteration += 1
             self.pulse_function()
         self.running = False

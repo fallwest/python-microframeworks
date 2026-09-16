@@ -1,9 +1,10 @@
+# pylint: disable=expression-not-assigned
 from time import sleep
 from unittest import mock
 
 from grappa import should
 
-from python_microframeworks.bingo import Bingo
+from py_microframeworks.bingo import Bingo
 
 
 def test_bingo_must_call_callback_when_match():
@@ -123,7 +124,8 @@ def test_bing_must_print_error_when_cell_not_callable():
     board = Bingo(state, lambda: sleep(0.03), log_delegate=log_delegate)
     board.add_cell(not_callable, callback=callback)
     board.run()
-    log_delegate.assert_called_with("Failed to evaluate expressions: (1,). Got exception\nExpression must be a str or callable, got int")
+    log_delegate.assert_called_with("Failed to evaluate expressions: (1,). "
+                                    "Got exception\nExpression must be a str or callable, got int")
     board.stop()
 
 
@@ -248,7 +250,7 @@ def test_bingo_must_set_complete_to_true_when_board_completed_when_use_up_false_
     board.complete | should.be.true  # pylint: disable=W0104
 
 
-def test_bingo_must_set_complete_to_false_when_board_completed_when_use_up_false_cell_not_executed():
+def test_bingo_must_set_complete_to_false_when_board_completed_when_use_up_false_cell_not_executed():  # pylint: disable=line-too-long
     state = {"a": 0}
     board = Bingo(state, lambda: sleep(0.01), max_iterations=5)
     board.add_cell("a > 0")

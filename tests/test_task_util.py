@@ -1,4 +1,4 @@
-# pylint: disable=pointless-statement
+# pylint: disable=expression-not-assigned,pointless-statement,redefined-outer-name
 import time
 from unittest import mock
 from unittest.mock import Mock
@@ -6,7 +6,7 @@ from unittest.mock import Mock
 import pytest
 from grappa import should
 
-from python_microframeworks.task_util import henrulle
+from py_microframeworks.task_util import henrulle
 
 
 @pytest.fixture

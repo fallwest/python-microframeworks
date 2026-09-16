@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-package-dir = {"" = "python_microframeworks"}
+package-dir = {"" = "py_microframeworks"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -39,6 +39,6 @@ disable = [
     "useless-suppression",
     "deprecated-pragma",
     "use-symbolic-message-instead",
-    "missing-function-docstring"
+    "missing-function-docstring",
     "missing-module-docstring", # Disables the requirement for a docstring at the top of every file
 ]

@@ -4,7 +4,8 @@ from typing import Callable, List
 import timeout_timer
 
 
-def henrulle(context, tasks: List[Callable], attempts: int = 2, custom_log_delegate=None, signal="completed") -> None:
+def henrulle(context, tasks: List[Callable], attempts: int = 2,
+             custom_log_delegate=None, signal="completed") -> None:
     """Execute a list of tasks until one of them returns True, or all attempts are exhausted.
 
     Args:
@@ -13,7 +14,8 @@ def henrulle(context, tasks: List[Callable], attempts: int = 2, custom_log_deleg
         tasks (List[Callable]): A list of callables that return a boolean indicating whether the task is complete.
         attempts (int, optional): The number of times to attempt the task sequence before giving up. Defaults to 2.
         signal (string, optional): The name of the property on the context object to use as a completed flag.
-    """
+    """  # pylint: disable=line-too-long
+
     with IndentLevel() as indent_level_mgr:
         index = -1
         setattr(context, "index", index)
@@ -47,11 +49,12 @@ def henrulle(context, tasks: List[Callable], attempts: int = 2, custom_log_deleg
                     return
 
 
-# Source - https://stackoverflow.com/a/44805246
-# Posted by Billy, modified by community. See post 'Timeline' for change history
-# Retrieved 2026-04-20, License - CC BY-SA 3.0
-
 class IndentLevel:
+    """
+    Source - https://stackoverflow.com/a/44805246
+    Posted by Billy, modified by community. See post 'Timeline' for change history
+R   Retrieved 2026-04-20, License - CC BY-SA 3.0
+    """
     indent_level = -1
 
     def __enter__(self):
