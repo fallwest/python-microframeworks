@@ -53,7 +53,7 @@ class IndentLevel:
     """
     Source - https://stackoverflow.com/a/44805246
     Posted by Billy, modified by community. See post 'Timeline' for change history
-R   Retrieved 2026-04-20, License - CC BY-SA 3.0
+    Retrieved 2026-04-20, License - CC BY-SA 3.0
     """
     indent_level = -1
 
