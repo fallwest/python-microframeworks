@@ -8,7 +8,7 @@ from py_microframeworks.bingo import Bingo
 
 
 def test_bingo_must_find_an_appropriate_activity():
-    state = {"month": randint(1, 12), "snowdepth": 0, "temp": 0, "wind": randint(0, 25),
+    state = {"month": randint(1, 12), "wind": randint(0, 25), "temp": 0, "snowdepth": 0,
              "activities": ["flyfishing", "iceskating", "sailing", "skiing"]}
     def warm_period():
         return state["month"] in [4, 5, 6, 7, 8, 9, 10]
