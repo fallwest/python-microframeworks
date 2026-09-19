@@ -1,5 +1,5 @@
-# pylint: disable=expression-not-assigned
-from random import randint
+# pylint: disable=expression-not-assigned, multiple-statements
+from random import randint, sample
 from time import sleep
 
 from grappa import should
@@ -14,15 +14,15 @@ def test_bingo_must_find_an_appropriate_activity():
         return state["month"] in [4, 5, 6, 7, 8, 9, 10]
     def get_temp():
         temp_range = (6, 30) if warm_period() else (-35, 5)
-        state["temp"] = randint(*temp_range)
-        return True
+        state["temp"] = randint(*temp_range); return True
     def get_snow():
-        state["snowdepth"] = 0 if warm_period() else randint(0, 120)
-        return True
+        state["snowdepth"] = 0 if warm_period() else randint(0, 120); return True
     def drop_activity(activity):
         state["activities"].remove(activity)
     def add_activity(activity):
         state["activities"].append(activity)
+    def pick_one():
+        state["activities"] = sample(state["activities"], 1)
 
     board = Bingo(state, lambda: sleep(0.01), max_iterations=3)
 
@@ -35,6 +35,7 @@ def test_bingo_must_find_an_appropriate_activity():
     board.add_cell("len(activities) == 1", callback=board.stop)
     board.add_cell("remaining_iterations == 1", "len(activities) == 0",
                    callback=lambda: add_activity("cards"))
+    board.add_cell("remaining_iterations == 1", "len(activities) > 1", callback=pick_one)
 
     board.wait()
 
