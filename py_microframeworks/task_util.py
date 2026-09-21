@@ -29,7 +29,8 @@ def henrulle(context, tasks: List[Callable], attempts: int = 2,
                 setattr(context, "index", index)
                 is_completed = None
                 indent = " " * 4 if indent_level_mgr.indent_level > 0 else ""
-                task_name = f"{task.__name__} ({index})"
+                task_name = task.__name__ if hasattr(task, "__name__") else "task"
+                task_id = f"{task_name} ({index})"
                 with suppress(Exception):
                     if hasattr(context, "global_timeout"):
                         try:
@@ -39,7 +40,7 @@ def henrulle(context, tasks: List[Callable], attempts: int = 2,
                             pass
                     else:
                         is_completed = task()
-                msg = f"{task_name}: {is_completed}"
+                msg = f"{task_id}: {is_completed}"
                 if custom_log_delegate:
                     custom_log_delegate(indent + msg)
                 if is_completed:
