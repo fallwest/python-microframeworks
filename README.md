@@ -1,7 +1,7 @@
 # python-microframeworks
 A collection of functional programming inspired microframeworks for solving complex (even non-linear) problems.
 
-# Examples
+# Frameworks
 
 ## The Bingo framework
 
@@ -11,31 +11,25 @@ See [tests/test_integration_bingo.py](tests/test_integration_bingo.py):
 
 ```
 def test_bingo_must_find_an_appropriate_activity():
-    state = {"temp": 0, "wind": 0, "month": 1, "snowdepth": 0,
+    state = {"month": randint(1, 12), "wind": randint(0, 25), "temp": 0, "snowdepth": 0,
              "activities": ["flyfishing", "iceskating", "sailing", "skiing"]}
-    def get_month():
-        state["month"] = randint(1, 12)
-        return True
     def warm_period():
         return state["month"] in [4, 5, 6, 7, 8, 9, 10]
     def get_temp():
         temp_range = (6, 30) if warm_period() else (-35, 5)
-        state["temp"] = randint(*temp_range)
-        return True
-    def get_wind():
-        state["wind"] = randint(0, 25)
-        return True
+        state["temp"] = randint(*temp_range); return True
     def get_snow():
-        state["snowdepth"] = 0 if warm_period() else randint(0, 120)
-        return True
+        state["snowdepth"] = 0 if warm_period() else randint(0, 120); return True
     def drop_activity(activity):
         state["activities"].remove(activity)
     def add_activity(activity):
         state["activities"].append(activity)
+    def pick_one():
+        state["activities"] = sample(state["activities"], 1)
 
     board = Bingo(state, lambda: sleep(0.01), max_iterations=3)
 
-    board.add_cell(get_month, get_temp, get_wind, get_snow)
+    board.add_cell(get_temp, get_snow)
     board.add_cell("temp < 10 or wind < 6", callback=lambda: drop_activity("sailing"))
     board.add_cell("snowdepth < 40", callback=lambda: drop_activity("skiing"))
     board.add_cell("temp > 5 or snowdepth > 10", callback=lambda: drop_activity("iceskating"))
@@ -44,6 +38,8 @@ def test_bingo_must_find_an_appropriate_activity():
     board.add_cell("len(activities) == 1", callback=board.stop)
     board.add_cell("remaining_iterations == 1", "len(activities) == 0",
                    callback=lambda: add_activity("cards"))
+    board.add_cell("remaining_iterations == 1", "len(activities) > 1",
+                   callback=pick_one)
 
     board.wait()
 
@@ -60,17 +56,17 @@ See [tests/test_task_util.py](tests/test_task_util.py):
 
 ```
 def test_henrulle_must_attempt_sequence_specified_number_of_times(context_obj):
-    task_1 = Mock(__name__="task_1", return_value=False)
-    task_2 = Mock(__name__="task_2", return_value=False)
+    task_1 = Mock(return_value=False)
+    task_2 = Mock(return_value=False)
     henrulle(context_obj, [task_1, task_2], attempts=3)
     all([task_1.call_count == 3, task_2.call_count == 3]) | should.be.true
 
 def test_henrulle_must_allow_any_task_to_abort_job(context_obj):
     def abort_job():
         context_obj.completed = True
-    task_1 = Mock(__name__="task_1", return_value=False)
-    task_2 = Mock(__name__="task_2", side_effect=abort_job)
-    task_3 = Mock(__name__="task_3", return_value=True)
+    task_1 = Mock(return_value=False)
+    task_2 = Mock(side_effect=abort_job)
+    task_3 = Mock(return_value=True)
     henrulle(context_obj, [task_1, task_2, task_3], attempts=1)
     all([task_1.called, task_2.called]) | should.be.true
     task_3.called | should.be.false
@@ -90,5 +86,5 @@ def test_henrulle_of_henrulles_must_support_subsequence_behavior():
     henrulle(context_obj, [sequence_1, sequence_2], attempts=1)
 
     task_1_2.called | should.be.false
-    all([task_2_1, task_2_2]) | should.be.true
+    all([task_1_1, task_2_1, task_2_2]) | should.be.true
 ```

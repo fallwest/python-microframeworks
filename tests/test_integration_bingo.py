@@ -35,7 +35,8 @@ def test_bingo_must_find_an_appropriate_activity():
     board.add_cell("len(activities) == 1", callback=board.stop)
     board.add_cell("remaining_iterations == 1", "len(activities) == 0",
                    callback=lambda: add_activity("cards"))
-    board.add_cell("remaining_iterations == 1", "len(activities) > 1", callback=pick_one)
+    board.add_cell("remaining_iterations == 1", "len(activities) > 1",
+                   callback=pick_one)
 
     board.wait()
 
