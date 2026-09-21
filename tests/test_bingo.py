@@ -129,6 +129,17 @@ def test_bing_must_print_error_when_cell_not_callable():
     board.stop()
 
 
+def test_bing_must_print_callback_msg_when_defined():
+    log_delegate = mock.Mock()
+    callback = mock.Mock()
+    state = {"a": 1}
+    board = Bingo(state, lambda: sleep(0.03), log_delegate=log_delegate)
+    board.add_cell("a==1", callback=callback, callback_msg="Firing callback")
+    board.run()
+    log_delegate.assert_called_with("Firing callback")
+    board.stop()
+
+
 def test_bingo_cell_must_support_object_function_call_expressions():
     state = {"a": 1, "b": mock.Mock(do_exec=mock.Mock(return_value=True))}
     callback = mock.Mock()
