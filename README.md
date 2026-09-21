@@ -61,6 +61,7 @@ def test_henrulle_must_attempt_sequence_specified_number_of_times(context_obj):
     henrulle(context_obj, [task_1, task_2], attempts=3)
     all([task_1.call_count == 3, task_2.call_count == 3]) | should.be.true
 
+
 def test_henrulle_must_allow_any_task_to_abort_job(context_obj):
     def abort_job():
         context_obj.completed = True
@@ -70,6 +71,7 @@ def test_henrulle_must_allow_any_task_to_abort_job(context_obj):
     henrulle(context_obj, [task_1, task_2, task_3], attempts=1)
     all([task_1.called, task_2.called]) | should.be.true
     task_3.called | should.be.false
+
 
 def test_henrulle_of_henrulles_must_support_subsequence_behavior():
     task_1_1 = Mock(__name__="task_1_1", return_value=True)
