@@ -106,4 +106,4 @@ def test_henrulle_of_henrulles_must_support_subsequence_behavior():
     henrulle(context_obj, [sequence_1, sequence_2], attempts=1)
 
     task_1_2.called | should.be.false
-    all([task_2_1, task_2_2]) | should.be.true
+    all([task_1_1, task_2_1, task_2_2]) | should.be.true
