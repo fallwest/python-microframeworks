@@ -74,10 +74,10 @@ def test_henrulle_must_allow_any_task_to_abort_job(context_obj):
 
 
 def test_henrulle_of_henrulles_must_support_subsequence_behavior():
-    task_1_1 = Mock(__name__="task_1_1", return_value=True)
-    task_1_2 = Mock(__name__="task_1_2", return_value=False)
-    task_2_1 = Mock(__name__="task_1_1", return_value=False)
-    task_2_2 = Mock(__name__="task_1_2", return_value=False)
+    task_1_1 = Mock(return_value=True)
+    task_1_2 = Mock(return_value=False)
+    task_2_1 = Mock(return_value=False)
+    task_2_2 = Mock(return_value=False)
 
     def sequence_1():
         henrulle(context_obj, [task_1_1, task_1_2], signal="stop-seq1")
