@@ -12,7 +12,7 @@ description = "A collection of functional programming inspired microframeworks f
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
 authors = [
-  {name = "James Westfall", email = "james.westfall@neat.no"}
+    {name = "James Westfall", email = "james.westfall@neat.no"}
 ]
 
 dependencies = [
@@ -28,20 +28,25 @@ package-dir = {"" = "py_microframeworks"}
 where = ["src"]
 exclude = ["tests", "*.tests", "*.tests.*", "tests.*"]
 
+[tool.coverage.run]
+omit = [
+    "tests/*",
+]
+
 [tool.flake8]  # via Flake8-pyproject
 max-line-length = 120
-extend-ignore = ["E203"]
 exclude = ["env", ".venv"]
- 
+
 [tool.isort]
 profile = "black"
 line_length = 120
- 
+extend_skip = ["env", ".venv"]
+
 [tool.pylint.main]
 fail-under = 10.0
 recursive = true
 ignore = ["env", ".venv"]
- 
+
 [tool.pylint.messages_control]
 # Disable specific rules or categories entirely
 disable = [
@@ -55,9 +60,4 @@ disable = [
     "use-symbolic-message-instead",
     "missing-function-docstring",
     "missing-module-docstring",
-]
-
-[tool.coverage.run]
-omit = [
-    "tests/*",
 ]

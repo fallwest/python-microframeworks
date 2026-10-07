@@ -75,6 +75,19 @@ def test_bingo_cell_must_support_object_expressions():
     callback.called | should.be.true  # pylint: disable=W0104
 
 
+def test_bingo_cell_must_stop_evaluating_cell_expressions_on_first_false():
+    expr_0 = mock.Mock(return_value=True)
+    expr_1 = mock.Mock(return_value=False)
+    expr_2 = mock.Mock(return_value=True)
+    callback = mock.Mock()
+    board = Bingo({}, lambda: sleep(0.05))
+    board.add_cell(expr_0, expr_1, expr_2, callback=callback)
+    board.run()
+    board.stop()
+    all([expr_0.called, expr_1.called]) | should.be.true  # pylint: disable=W0104
+    any([expr_2.called, callback.called]) | should.be.false  # pylint: disable=W0104
+
+
 def test_bingo_cell_must_support_function_in_cell():
     state = {"a": 0}
     callback = mock.Mock()
@@ -128,7 +141,7 @@ def test_bing_must_print_error_when_cell_not_callable():
     board.add_cell(not_callable, callback=callback)
     board.run()
     log_delegate.assert_called_with("Failed to evaluate expressions: (1,). "
-                                    "Got exception\nExpression must be a str or callable, got int")
+                                    "Got exception:\nExpression must be a str or callable, got int")
     board.stop()
 
 

@@ -1,5 +1,6 @@
 -e .
 pylint==4.1.2
 flake8==7.4.1
+isort==9.0.2
 Flake8-pyproject==1.2.4
 pytest-cov==7.1.0

@@ -89,12 +89,18 @@ class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional
                 if not cell["triggered"]:
                     if self.consecutive and self._has_uncalled_priors(index):
                         continue
+                    fire = False
                     try:
-                        if all(self._execute_expr(expr) for expr in cell["expressions"]):
-                            self._fire_cell(cell)
+                        fire = all(self._execute_expr(expr) for expr in cell["expressions"])
                     except Exception as ex:  # pylint: disable=W0718
                         self.log_delegate("Failed to evaluate expressions: "
-                                          f"{cell['expressions']}. Got exception\n{ex}")
+                                          f"{cell['expressions']}. Got exception:\n{ex}")
+                    if fire:
+                        try:
+                            self._fire_cell(cell)
+                        except Exception as ex:  # pylint: disable=W0718
+                            self.log_delegate("Failed to fire callback for "
+                                              f"{cell['expressions']}. Got exception:\n{ex}")
             self.current_iteration += 1
             self.state["remaining_iterations"] = self.max_iterations - self.current_iteration
             self.pulse_function()

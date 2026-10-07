@@ -23,6 +23,7 @@ jobs:
             - name: Lint
               run: |
                   flake8 .
+                  isort --check-only --diff .
                   pylint .
             - name: Run tests with pytest
               run: |
