@@ -78,6 +78,7 @@ def test_bingo_cell_must_support_object_expressions():
 def test_bingo_cell_must_support_function_in_cell():
     state = {"a": 0}
     callback = mock.Mock()
+
     def func_to_use():
         return state["a"] > 0
     board = Bingo(state, lambda: sleep(0.05))
@@ -91,6 +92,7 @@ def test_bingo_cell_must_support_function_in_cell():
 
 def test_bingo_cell_must_support_state_change_cell_function_call():
     state = {"a": 0, "func_to_use": lambda: func_to_use()}  # pylint: disable=unnecessary-lambda
+
     def func_to_use():
         state["a"] += 1
         return True
@@ -105,6 +107,7 @@ def test_bingo_cell_must_support_state_change_cell_function_call():
 
 def test_bingo_cell_must_support_state_change_cell_function_call_expr():
     state = {"a": 0, "func_to_use": lambda: func_to_use()}  # pylint: disable=unnecessary-lambda
+
     def func_to_use():
         state["a"] += 1
         return True
@@ -250,7 +253,8 @@ def test_bingo_must_set_complete_to_true_when_board_completed_when_use_up_false_
     board.complete | should.be.true  # pylint: disable=W0104
 
 
-def test_bingo_must_set_complete_to_false_when_board_completed_when_use_up_false_cell_not_executed():  # pylint: disable=line-too-long
+# pylint: disable-next=line-too-long
+def test_bingo_must_set_complete_to_false_when_board_completed_when_use_up_false_cell_not_executed():
     state = {"a": 0}
     board = Bingo(state, lambda: sleep(0.01), max_iterations=5)
     board.add_cell("a > 0")

@@ -10,17 +10,23 @@ from py_microframeworks.bingo import Bingo
 def test_bingo_must_find_an_appropriate_activity():
     state = {"month": randint(1, 12), "wind": randint(0, 25), "temp": 0, "snowdepth": 0,
              "activities": ["flyfishing", "iceskating", "sailing", "skiing"]}
+
     def warm_period():
         return state["month"] in [4, 5, 6, 7, 8, 9, 10]
+
     def get_temp():
         temp_range = (6, 30) if warm_period() else (-35, 5)
-        state["temp"] = randint(*temp_range); return True
+        state["temp"] = randint(*temp_range); return True  # noqa: E702
+
     def get_snow():
-        state["snowdepth"] = 0 if warm_period() else randint(0, 120); return True
+        state["snowdepth"] = 0 if warm_period() else randint(0, 120); return True  # noqa: E702
+
     def drop_activity(activity):
         state["activities"].remove(activity)
+
     def add_activity(activity):
         state["activities"].append(activity)
+
     def pick_one():
         state["activities"] = sample(state["activities"], 1)
 

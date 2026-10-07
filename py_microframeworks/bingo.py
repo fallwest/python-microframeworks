@@ -46,7 +46,7 @@ class Bingo:  # pylint: disable=too-many-instance-attributes,too-many-positional
     def wait(self, poll: float = 1):
         self.run()
         while self.running and self.current_iteration < self.max_iterations \
-            and any(self._remaining_cells()):
+                and any(self._remaining_cells()):
             time.sleep(poll)
         if self.thread:
             self.thread.join()
