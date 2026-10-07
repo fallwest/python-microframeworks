@@ -62,6 +62,14 @@ def test_henrulle_must_attempt_sequence_specified_number_of_times(context_obj):
     all([task_1.call_count == 3, task_2.call_count == 3]) | should.be.true
 
 
+def test_henrulle_must_invoke_custom_log_delegate_when_defined(context_obj):
+    henrulle(context_obj, [])
+    task_1 = Mock(__name__="task_1", return_value=True)
+    cust_log_delegate = Mock()
+    henrulle(context_obj, [task_1], attempts=1, custom_log_delegate=cust_log_delegate)
+    cust_log_delegate.assert_called_with("task_1 (0): True")
+
+
 def test_henrulle_must_allow_any_task_to_abort_job(context_obj):
     def abort_job():
         context_obj.completed = True
